@@ -1,0 +1,122 @@
+#:import Factory kivy.factory.Factory
+#:import utils kivy.utils
+
+<AuthorsPopup@Popup>
+    auto_dismiss: True
+    size_hint: 0.6, 0.3
+    pos_hint: {"x":0.2, "top": 0.9}
+
+    title: "Autorzy aplikacji"
+
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Bartosz Tupaj"
+            font_size: 20
+        Label:
+            text: "Maksymilian Sreberski"
+            font_size: 20
+        Label:
+            text: "Wiktor Hoffmann"
+            font_size: 20
+
+WindowManager:
+    MenuWindow:
+    DictionaryWindow:
+
+<MenuWindow>:
+    name: "menu"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 30
+
+        canvas:
+            Color:
+                rgb: (0x1F/255, 0x01/255, 0x48/255)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Menu Główne"
+            font_size: 60
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (209/255, 194/255, 1)
+            outline_width: 2
+
+            canvas.before:
+                Color:
+                    rgb: (0x1F/255, 0x01/255, 0x48/255)
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+        Button:
+            size_hint: 0.5, 0.3
+            pos_hint: {"center_x": 0.5}
+            background_color: utils.get_color_from_hex('226E8F')
+
+            text: "Przejdź do Słownika"
+            font_size: 32
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (123/255, 6/255, 209/255)
+            outline_width: 1
+
+            on_release:
+                app.root.current = "friendlyDict"
+                root.manager.transition.direction = "left"
+
+        Button:
+            size_hint: 0.5, 0.3
+            pos_hint: {"center_x": 0.5}
+            background_color: utils.get_color_from_hex('226E8F')
+
+            text: "Autorzy"
+            font_size: 32
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (123/255, 6/255, 209/255)
+            outline_width: 1
+
+            on_release: Factory.AuthorsPopup().open()
+
+<DictionaryWindow>:
+    name: "friendlyDict"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: 50
+        spacing: 30
+
+        canvas:
+            Color:
+                rgb: (0x1F/255, 0x01/255, 0x48/255)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Słownik"
+            font_size: 30
+
+        Button:
+            text: "Powrót do Menu Głównego"
+            font_size: 28
+            size_hint: 0.5, 0.3
+            pos_hint: {"center_x": 0.5}
+            background_color: utils.get_color_from_hex('226E8F')
+
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (123/255, 6/255, 209/255)
+            outline_width: 1
+
+            on_release:
+                app.root.current = "menu"
+                root.manager.transition.direction = "right"
