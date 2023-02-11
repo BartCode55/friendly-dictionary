@@ -1,35 +1,84 @@
 #:import Factory kivy.factory.Factory
 #:import utils kivy.utils
 
+<Button>
+    background_color: utils.get_color_from_hex('226E8F')
+    color: utils.get_color_from_hex('969693')
+    bold: True
+    outline_color: (123/255, 6/255, 209/255)
+    outline_width: 1
+    size_hint: 0.5, 0.3
+    pos_hint: {"center_x": 0.5}
+
+<BoxLayout>
+    orientation: "vertical"
+    size: root.width, root.height
+
 <AuthorsPopup@Popup>
     auto_dismiss: True
     size_hint: 0.6, 0.3
     pos_hint: {"x":0.2, "top": 0.9}
+    background_color: (123/255, 6/255, 209/255)
 
     title: "Autorzy aplikacji"
+    title_size: 25
+    title_align: "center"
+    title_color: (0x18/255, 0xCB/255, 0xDE/255)
 
     BoxLayout:
-        orientation: "vertical"
         Label:
             text: "Bartosz Tupaj"
             font_size: 20
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (123/255, 6/255, 209/255)
+            outline_width: 1
         Label:
             text: "Maksymilian Sreberski"
             font_size: 20
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (123/255, 6/255, 209/255)
+            outline_width: 1
         Label:
             text: "Wiktor Hoffmann"
             font_size: 20
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (123/255, 6/255, 209/255)
+            outline_width: 1
+
+<AlphabetStartPopup@Popup>
+    auto_dismiss: True
+    size_hint: 0.7, 0.4
+    pos_hint: {"x":0.15, "top": 0.9}
+    background_color: (123/255, 6/255, 209/255)
+
+    title: "Na czym polega ta gra?"
+    title_size: 25
+    title_align: "center"
+    title_color: (0x18/255, 0xCB/255, 0xDE/255)
+
+    BoxLayout:
+        Label:
+            text: "Otrzymasz 5 losowych słów ze słownika. Twoim celem\njest wpisać je w kolejności alfabetycznej. Wpisujesz słowo \ndo pola tekstowego i potwierdzasz naciskając guzik\n'Prześlij odpowiedź'. Wygrywasz jeśli wpiszesz słówka \nw poprawnej formie w odpowiedniej kolejności"
+            font_size: 20
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (123/255, 6/255, 209/255)
+            outline_width: 1
+
 
 WindowManager:
     MenuWindow:
     DictionaryWindow:
+    GamesWindow:
+    AlphabetGame:
 
 <MenuWindow>:
     name: "menu"
 
     BoxLayout:
-        orientation: "vertical"
-        size: root.width, root.height
         padding: 50
         spacing: 30
 
@@ -41,47 +90,32 @@ WindowManager:
                 pos: self.pos
 
         Label:
-            text: "Menu Główne"
+            text: "Przyjazny Słowniczek"
             font_size: 60
             color: utils.get_color_from_hex('969693')
             bold: True
             outline_color: (209/255, 194/255, 1)
             outline_width: 2
 
-            canvas.before:
-                Color:
-                    rgb: (0x1F/255, 0x01/255, 0x48/255)
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-
         Button:
-            size_hint: 0.5, 0.3
-            pos_hint: {"center_x": 0.5}
-            background_color: utils.get_color_from_hex('226E8F')
-
             text: "Przejdź do Słownika"
             font_size: 32
-            color: utils.get_color_from_hex('969693')
-            bold: True
-            outline_color: (123/255, 6/255, 209/255)
-            outline_width: 1
 
             on_release:
                 app.root.current = "friendlyDict"
                 root.manager.transition.direction = "left"
 
         Button:
-            size_hint: 0.5, 0.3
-            pos_hint: {"center_x": 0.5}
-            background_color: utils.get_color_from_hex('226E8F')
+            text: "Przejdź do listy gier"
+            font_size: 32
 
+            on_release:
+                app.root.current = "games"
+                root.manager.transition.direction = "left"
+
+        Button:
             text: "Autorzy"
             font_size: 32
-            color: utils.get_color_from_hex('969693')
-            bold: True
-            outline_color: (123/255, 6/255, 209/255)
-            outline_width: 1
 
             on_release: Factory.AuthorsPopup().open()
 
@@ -89,8 +123,6 @@ WindowManager:
     name: "friendlyDict"
 
     BoxLayout:
-        orientation: "vertical"
-        size: root.width, root.height
         padding: 50
         spacing: 30
 
@@ -102,21 +134,133 @@ WindowManager:
                 pos: self.pos
 
         Label:
-            text: "Słownik"
+            text: "Słowniczek"
             font_size: 30
+            font_size: 60
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (209/255, 194/255, 1)
+            outline_width: 2
 
         Button:
             text: "Powrót do Menu Głównego"
             font_size: 28
-            size_hint: 0.5, 0.3
-            pos_hint: {"center_x": 0.5}
-            background_color: utils.get_color_from_hex('226E8F')
-
-            color: utils.get_color_from_hex('969693')
-            bold: True
-            outline_color: (123/255, 6/255, 209/255)
-            outline_width: 1
 
             on_release:
                 app.root.current = "menu"
+                root.manager.transition.direction = "right"
+
+        Button:#W BUDOWIE
+            text: "Odczytaj slownik"
+            font_size: 28
+
+<GamesWindow>:
+    name: "games"
+
+    BoxLayout:
+        padding: 50
+        spacing: 30
+
+        canvas:
+            Color:
+                rgb: (0x1F/255, 0x01/255, 0x48/255)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Gry Edukacyjne"
+            font_size: 30
+            font_size: 60
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (209/255, 194/255, 1)
+            outline_width: 2
+
+        Button:
+            text: "Gra: Posortuj Słowa"
+            font_size: 30
+            on_release:
+                app.root.current = "alphabet"
+                root.manager.transition.direction = "left"
+
+        Button:
+            text: "Powrót do Menu Głównego"
+            font_size: 28
+
+            on_release:
+                app.root.current = "menu"
+                root.manager.transition.direction = "right"
+
+<AlphabetGame>:
+    name: "alphabet"
+    FloatLayout:
+        #gameList: gameList
+        #correctList: correctList
+        #answerList: answerList
+        #answer: answer
+        #game: game
+
+        size: root.width, root.height
+        canvas:
+            Color:
+                rgb: (0x1F/255, 0x01/255, 0x48/255)
+            Rectangle:
+                size: self.size
+                pos: self.pos
+
+        Label:
+            text: "Gra: Posortuj Słowa"
+            font_size: 50
+            pos_hint: {"x": 0.25, "top": 1}
+            size_hint: 0.5, 0.1
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (209/255, 194/255, 1)
+            outline_width: 2
+
+        Label:
+            id: AlphabetLabel
+            pos_hint: {"x": 0.25, "top": 0.75}
+            size_hint: 0.5, 0.1
+            text: ""
+            font_size: 30
+            color: utils.get_color_from_hex('969693')
+            bold: True
+            outline_color: (209/255, 194/255, 1)
+            outline_width: 1
+
+        TextInput:
+            id: AlphabetInput
+            multiline: False
+            text: ""
+            font_size: 30
+            size_hint: (0.8, 0.1)
+            pos_hint: {"x": 0.1, "top": 0.5}
+
+        Button:
+            text: "Rozpocznij / Jak grać"
+            font_size: 30
+            pos_hint: {"x": 0.25, "top": 0.37}
+            size_hint: 0.5, 0.1
+            on_release:
+                Factory.AlphabetStartPopup().open()
+                root.dictionaryPress()
+                root.randomWordsGame()
+
+        Button:
+            text: "Prześlij odpowiedź"
+            pos_hint: {"x": 0.25, "top": 0.25}
+            size_hint: 0.5, 0.1
+            font_size: 30
+            on_release: root.randomWordsAddition()
+
+        Button:
+            text: "Powrót do Listy Gier"
+            pos_hint: {"x": 0.25, "top": 0.13}
+            size_hint: 0.5, 0.1
+            font_size: 28
+
+            on_release:
+                app.root.current = "games"
                 root.manager.transition.direction = "right"
