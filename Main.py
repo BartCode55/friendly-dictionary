@@ -44,7 +44,7 @@ class DictionaryMethods():
                                       f'\n5.{self.gameList[4]}'
         self.correctList = self.gameList.copy()
         self.correctList.sort(key=lambda v: v.upper())
-    def randomWordsAddition(self):#potem rozwiń to tak by np podawał dobrą tablice jak sie zle odpowie albo zrobic to popupem nie wiem
+    def randomWordsAddition(self):#potem rozwiń to tak by np podawał dobrą tablice jak sie zle odpowie albo zrobic to popupem
         answer = self.ids.AlphabetInput.text
         self.answerList.append(answer)
         self.number = self.number + 1
@@ -55,8 +55,12 @@ class DictionaryMethods():
         if self.number == 5:
             if self.answerList == self.correctList:
                 self.ids.AlphabetLabel.text = "Brawo jesteś mistrzem alfabetu!"
+                self.number = 0
+                self.answerList.clear()
             else:
                 self.ids.AlphabetLabel.text = "Zła odpowiedź! Następnym razem na pewno się uda!"
+                self.number = 0
+                self.answerList.clear()
                 #print("Oto poprawna lista!")
                 #for line in self.correctList:
                     #print(line)
